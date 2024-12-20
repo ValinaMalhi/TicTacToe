@@ -21,6 +21,7 @@ const resetGame = () =>{
     turn0 = true;
     enableButtons();
     head.classList.add("hidden");
+    count = 0;
 
 }
 
@@ -31,9 +32,12 @@ const enableButtons = () =>{
         box.innerText = "";
     }
 }
+
+let count = 0;
 boxes.forEach((box) => {
     box.addEventListener("click", () => {
         console.log("Box was Clicked");
+        
         if(turn0)
         {
             box.innerText = "0";
@@ -44,8 +48,14 @@ boxes.forEach((box) => {
             turn0 = true;
         }
         box.disabled = true;
+        count++;
 
-        checkWinner();
+        let isWinner = checkWinner();
+
+        if(count == 9 && !isWinner)
+        {
+            gameDraw();
+        }
 
 
         
@@ -84,6 +94,12 @@ const checkWinner = () => {
         }
     }
 }
+
+const gameDraw = () => {
+    msg.innerText = "Draw";
+    head.classList.remove("hidden");
+    disableButtons();
+};
 
 newBtn.addEventListener("click", resetGame);
 resetbtn.addEventListener("click", resetGame);
